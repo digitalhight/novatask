@@ -23,6 +23,7 @@ const App: React.FC = () => {
 
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState<Status | null>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('nova_task_state', JSON.stringify(state));
@@ -105,6 +106,12 @@ const App: React.FC = () => {
                 </div>
                 <p className="text-slate-400 text-sm max-w-2xl font-light italic">{activeProject.description}</p>
               </div>
+              <button 
+                onClick={() => setShowShareModal(true)}
+                className="px-4 py-2 bg-purple-600/20 border border-purple-500/50 text-purple-300 rounded-lg text-xs font-bold hover:bg-purple-600/40 transition-all font-orbitron"
+              >
+                PARTAGER
+              </button>
             </header>
 
             <div className="flex-1 overflow-hidden relative">
@@ -202,6 +209,22 @@ const App: React.FC = () => {
                 <button type="submit" className="flex-1 py-3 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold tracking-widest rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all">DÉPLOYER</button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={() => setShowShareModal(false)}>
+          <div className="glass-panel w-full max-w-sm p-8 rounded-2xl border border-cyan-500/30" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-xl font-orbitron font-bold text-white mb-4 uppercase tracking-wider">PARTAGER LE PROTOCOLE</h3>
+            <p className="text-slate-400 text-sm mb-6 font-light">Lien d'accès crypté généré pour vos collaborateurs. Les protocoles de sécurité sont actifs.</p>
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold tracking-widest rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all"
+            >
+              FERMER
+            </button>
           </div>
         </div>
       )}
